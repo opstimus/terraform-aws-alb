@@ -49,4 +49,4 @@ module "application_load_balancer" {
   internal        = false
   certificate_arn = "arn:aws:acm:region:account:certificate/example"
 }
-```````
+```
