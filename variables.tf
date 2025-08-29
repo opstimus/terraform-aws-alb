@@ -31,3 +31,9 @@ variable "idle_timeout" {
   description = "In seconds upto 4000"
   default     = 60
 }
+
+variable "tags" {
+  type        = map(string)
+  description = "A map of tags to assign to the resource."
+  default     = {}
+}

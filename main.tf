@@ -31,9 +31,7 @@ resource "aws_security_group" "main" {
     ipv6_cidr_blocks = ["::/0"]
   }
 
-  tags = {
-    Name = "${var.project}-${var.environment}-alb"
-  }
+  tags = var.tags
 }
 
 resource "aws_lb" "main" {
@@ -45,6 +43,7 @@ resource "aws_lb" "main" {
 
   enable_deletion_protection = false
   idle_timeout               = var.idle_timeout
+  tags = var.tags
 }
 
 resource "aws_lb_listener" "http" {
@@ -61,6 +60,7 @@ resource "aws_lb_listener" "http" {
       status_code = "HTTP_301"
     }
   }
+  tags = var.tags
 }
 
 resource "aws_lb_listener" "https" {
@@ -79,4 +79,5 @@ resource "aws_lb_listener" "https" {
       status_code  = "200"
     }
   }
+  tags = var.tags
 }
