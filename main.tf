@@ -6,6 +6,7 @@ resource "aws_security_group" "main" {
   name        = "${var.project}-${var.environment}-alb"
   description = "${var.project}-${var.environment}-alb"
   vpc_id      = var.vpc_id
+  tags        = var.tags
 
   ingress {
     from_port   = 80
@@ -30,8 +31,6 @@ resource "aws_security_group" "main" {
     cidr_blocks      = ["0.0.0.0/0"]
     ipv6_cidr_blocks = ["::/0"]
   }
-
-  tags = var.tags
 }
 
 resource "aws_lb" "main" {
@@ -43,13 +42,14 @@ resource "aws_lb" "main" {
 
   enable_deletion_protection = false
   idle_timeout               = var.idle_timeout
-  tags = var.tags
+  tags                       = var.tags
 }
 
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.main.arn
   port              = "80"
   protocol          = "HTTP"
+  tags              = var.tags
 
   default_action {
     type = "redirect"
@@ -60,7 +60,7 @@ resource "aws_lb_listener" "http" {
       status_code = "HTTP_301"
     }
   }
-  tags = var.tags
+
 }
 
 resource "aws_lb_listener" "https" {
@@ -69,6 +69,7 @@ resource "aws_lb_listener" "https" {
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
   certificate_arn   = var.certificate_arn
+  tags              = var.tags
 
   default_action {
     type = "fixed-response"
@@ -79,5 +80,5 @@ resource "aws_lb_listener" "https" {
       status_code  = "200"
     }
   }
-  tags = var.tags
+
 }
