@@ -6,7 +6,12 @@ resource "aws_security_group" "main" {
   name        = "${var.project}-${var.environment}-alb"
   description = "${var.project}-${var.environment}-alb"
   vpc_id      = var.vpc_id
-  tags        = var.tags
+  tags = merge(
+    {
+      Name = "${var.project}-${var.environment}-alb"
+    },
+    var.tags
+  )
 
   ingress {
     from_port   = 80
@@ -34,12 +39,11 @@ resource "aws_security_group" "main" {
 }
 
 resource "aws_lb" "main" {
-  name               = "${var.project}-${var.environment}-${local.alb_name_suffix}"
-  internal           = var.internal
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.main.id]
-  subnets            = var.subnet_ids
-
+  name                       = "${var.project}-${var.environment}-${local.alb_name_suffix}"
+  internal                   = var.internal
+  load_balancer_type         = "application"
+  security_groups            = [aws_security_group.main.id]
+  subnets                    = var.subnet_ids
   enable_deletion_protection = false
   idle_timeout               = var.idle_timeout
   tags                       = var.tags
