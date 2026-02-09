@@ -9,7 +9,7 @@ This Terraform module creates an Application Load Balancer (ALB) along with a se
 | Name      | Version  |
 |-----------|----------|
 | terraform | >= 1.3.0 |
-| aws       | >= 4.0   |
+| aws       | >= 6.0   |
 | external  | >= 2.2.0 |
 | random    | >= 3.4.0 |
 
@@ -17,7 +17,7 @@ This Terraform module creates an Application Load Balancer (ALB) along with a se
 
 | Name | Version  |
 |------|----------|
-| aws  | >= 4.0   |
+| aws  | >= 6.0   |
 | external | >= 2.2.0 |
 | random   | >= 3.4.0 |
 
